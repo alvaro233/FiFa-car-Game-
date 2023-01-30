@@ -25,18 +25,8 @@ ICON = pygame.image.load("mesiformer.png")
 pygame.display.set_icon(ICON)
 
 # los colores god 
-screen.fill((60, 220, 0))
 
-## P2.2 - Draw the road
-pygame.draw.rect(screen, (50, 50, 50), (SCREEN_WIDTH/2  - ROAD_W/2, 0, ROAD_W, SCREEN_HEIGHT))
 
-## p2.4 - Draw the roadmark
-pygame.draw.rect(screen, (255, 240, 60), (SCREEN_WIDTH/2 - ROADMARK_W/2, 0, ROADMARK_W, SCREEN_HEIGHT))
-
-## lineas con derechos
-pygame.draw.rect(screen, (255, 255, 255), (SCREEN_WIDTH/2 - ROAD_W/2 + ROADMARK_W * 2, 0, ROADMARK_W, SCREEN_HEIGHT))
-
-pygame.draw.rect(screen, (255, 255, 255), (SCREEN_WIDTH/2 + ROAD_W/2 - ROADMARK_W * 3, 0, ROADMARK_W, SCREEN_HEIGHT))
 
 # pila recargable
 pygame.display.update()
@@ -47,7 +37,7 @@ mesi_car_loc.center = SCREEN_WIDTH/2 + ROAD_W/4, SCREEN_HEIGHT*0.6
 # mbbappe creation
 mbbappe_car = pygame.image.load("mbbappesepticon3 la resureccion.png")
 mbbappe_car_loc = mbbappe_car.get_rect()
-mbbappe_car_loc.center = SCREEN_WIDTH/2 - ROAD_W/4, SCREEN_HEIGHT*0.3
+mbbappe_car_loc.center = SCREEN_WIDTH/2 + ROAD_W/4, SCREEN_HEIGHT*0.2
 
 
 # juego creation
@@ -65,6 +55,28 @@ while running:
         if event.type == KEYDOWN:
             if event.key == K_1:
                 running = False
+
+            if event.key in [K_a, K_LEFT]:
+                mesi_car_loc = mesi_car_loc.move(-ROAD_W/2, 0)
+
+            if event.key in [K_d, K_RIGHT]:
+                mesi_car_loc = mesi_car_loc.move(ROAD_W/2, 0)
+
+    screen.fill((60, 220, 0))
+
+    ## P2.2 - Draw the road
+    pygame.draw.rect(screen, (50, 50, 50), (SCREEN_WIDTH/2  - ROAD_W/2, 0, ROAD_W, SCREEN_HEIGHT))
+
+    ## p2.4 - Draw the roadmark
+    pygame.draw.rect(screen, (255, 240, 60), (SCREEN_WIDTH/2 - ROADMARK_W/2, 0, ROADMARK_W, SCREEN_HEIGHT))
+
+    ## lineas con derechos
+    pygame.draw.rect(screen, (255, 255, 255), (SCREEN_WIDTH/2 - ROAD_W/2 + ROADMARK_W * 2, 0, ROADMARK_W, SCREEN_HEIGHT))
+
+    pygame.draw.rect(screen, (255, 255, 255), (SCREEN_WIDTH/2 + ROAD_W/2 - ROADMARK_W * 3, 0, ROADMARK_W, SCREEN_HEIGHT))
+
+            
+
 
     # dibujando un carrito facha 
     screen.blit(mesi_car, mesi_car_loc)
