@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
 pygame.init()
-
+import random
 # ventana creacion
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
@@ -13,6 +13,10 @@ ROAD_W = 500
 ## P2.3 - Roadmark width
 ROADMARK_W = 10
 
+#carril derecho
+
+carril_derecho = SCREEN_WIDTH/2 + ROAD_W/4
+carril_isquierdo = SCREEN_WIDTH/2 - ROAD_W/4
 
 # ventana alta gama
 screen = pygame.display.set_mode( SIZE )
@@ -33,16 +37,34 @@ pygame.display.update()
 #mesi creation
 mesi_car = pygame.image.load("mesiformer2 el regreso.png")
 mesi_car_loc = mesi_car.get_rect()
-mesi_car_loc.center = SCREEN_WIDTH/2 + ROAD_W/4, SCREEN_HEIGHT*0.6
+mesi_car_loc.center = carril_derecho, SCREEN_HEIGHT*0.6
 # mbbappe creation
 mbbappe_car = pygame.image.load("mbbappesepticon3 la resureccion.png")
 mbbappe_car_loc = mbbappe_car.get_rect()
-mbbappe_car_loc.center = SCREEN_WIDTH/2 + ROAD_W/4, SCREEN_HEIGHT*0.2
+mbbappe_car_loc.center = carril_isquierdo, SCREEN_HEIGHT*0.2
+
 
 
 # juego creation
 running = True
 while running:
+
+    #enemigo vivo!
+
+    mbbappe_car_loc.y += 10
+   
+
+    #mbbappe vuelve a la carretera
+    if mbbappe_car_loc.y > SCREEN_HEIGHT:
+        mbbappe_car_loc.y = -250
+
+        #mbbappe loco
+        if random.randint(0, 1) == 0:
+            mbbappe_car_loc.center = carril_derecho, -200
+
+        else:
+            mbbappe_car_loc.center = carril_isquierdo, -200
+
     for event in pygame.event.get():
         
         if event.type == QUIT:
@@ -62,10 +84,10 @@ while running:
             if event.key in [K_d, K_RIGHT]:
                 mesi_car_loc = mesi_car_loc.move(ROAD_W/2, 0)
 
-    screen.fill((60, 220, 0))
+    screen.fill((255, 220, 0))
 
     ## P2.2 - Draw the road
-    pygame.draw.rect(screen, (50, 50, 50), (SCREEN_WIDTH/2  - ROAD_W/2, 0, ROAD_W, SCREEN_HEIGHT))
+    pygame.draw.rect(screen, (50, 50, 0), (SCREEN_WIDTH/2  - ROAD_W/2, 0, ROAD_W, SCREEN_HEIGHT))
 
     ## p2.4 - Draw the roadmark
     pygame.draw.rect(screen, (255, 240, 60), (SCREEN_WIDTH/2 - ROADMARK_W/2, 0, ROADMARK_W, SCREEN_HEIGHT))
