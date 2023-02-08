@@ -25,9 +25,20 @@ screen = pygame.display.set_mode( SIZE )
 pygame.display.set_caption("FIFA car game")
 
 # el icono
-ICON = pygame.image.load("mesiformer.png")
+ICON = pygame.image.load("mesiformer la destruccion.png")
 pygame.display.set_icon(ICON)
 
+#velocidad de mbbappe
+velocidad = 10
+
+#texto del fin
+texto = pygame.font.Font("TheSnailson-K7glW.otf", 64)
+textoX = 400
+textoY = 400
+# game over texto y funcion
+def fin(x, y):
+    texto_inicio = texto.render("te dejaron 7-0 jaja nuv", True, (87,87,86))
+    screen.blit(texto_inicio, (x, y))
 # los colores god 
 
 
@@ -35,23 +46,29 @@ pygame.display.set_icon(ICON)
 # pila recargable
 pygame.display.update()
 #mesi creation
-mesi_car = pygame.image.load("mesiformer2 el regreso.png")
+mesi_car = pygame.image.load("car.png")
 mesi_car_loc = mesi_car.get_rect()
 mesi_car_loc.center = carril_derecho, SCREEN_HEIGHT*0.6
 # mbbappe creation
-mbbappe_car = pygame.image.load("mbbappesepticon3 la resureccion.png")
+mbbappe_car = pygame.image.load("racing-car.png")
 mbbappe_car_loc = mbbappe_car.get_rect()
 mbbappe_car_loc.center = carril_isquierdo, SCREEN_HEIGHT*0.2
 
 
 
 # juego creation
+#contador
+contador = 0
 running = True
 while running:
 
+    contador += 1
+
+    if contador == 5000:
+        velocidad += 0.15
     #enemigo vivo!
 
-    mbbappe_car_loc.y += 10
+    mbbappe_car_loc.y += velocidad
    
 
     #mbbappe vuelve a la carretera
@@ -65,7 +82,15 @@ while running:
         else:
             mbbappe_car_loc.center = carril_isquierdo, -200
 
+    # fin del partido 
+    if mesi_car_loc[0] == mbbappe_car_loc[0] and mbbappe_car_loc[1] > mesi_car_loc[1] - 64: 
+        #fin(textoX, textoY)
+        #print("perdiste")
+        pygame.display.update()
+        break
+
     for event in pygame.event.get():
+        
         
         if event.type == QUIT:
             running = False
